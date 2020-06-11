@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+  <head>
+
+    <meta charset="utf-8">
+
+    <title>Web App</title>
+  </head>
+  <body>
+    <h1 id="title">Hello, welcome to my web app</h1>
+    <div class="box">
+      <h1>Hello, world!</h1>
+      <p></p>
+      <ul>
+        <li>Hi</li>
+        <li>Op</li>
+      </ul>
+
+    </div>
+
+    <script>
+      function  bgChange () {
+        setTimeout(bgChange, 1000) // Changes the color while on the page
+        const h1 = document.querySelector('#title')  // Grabs the object with the id title
+        const r = Math.floor(Math.random() * 255)
+        const g = Math.floor(Math.random() * 255)
+        const b = Math.floor(Math.random() * 255)
+        h1.style.color =`rgb(${r}, ${g}, ${b})`
+
+      }
+
+      bgChange()
+    </script>
+
+
+  </body>
+</html>
