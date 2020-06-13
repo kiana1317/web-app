@@ -34,7 +34,7 @@
       }
 
 
-      button{
+      #but{
         color:black;
         border-radius: 12px;
         background-color: #d3d3d3
@@ -57,14 +57,12 @@
         padding: 15px 32px;
       }
 
-
-
     </style>
   </head>
   <body>
     <audio id="myAudio"><source src="JesseSpillane.mp3" type="audio/mpeg"></audio>
-      <button onclick="playAudio()" type="button">Play</button>
-      <button onclick="pauseAudio()" type="button">Pause</button>
+      <button id="but" onclick="playAudio()" type="button">Play</button>
+      <button id = "but" onclick="pauseAudio()" type="button">Pause</button>
       <div>
             <h1 id="BLM"></h1>
       </div>
@@ -74,20 +72,18 @@
 
     <script>
 
-      const blood = false;
 
       iter()
-      document.addEventListener("mousemove", (e)=>{
-        if (blood === true ) {
-          let newlet = document.createElement("button")
-          newlet.style.position = 'absolute'
-          newlet.style.border_radius= "50%"
-          newlet.style.padding= "15px 32px"
-          newlet.style.left =e.clientX + 'px'
-          newlet.style.top = e.clientY + 'px'
-          document.body.appendChild(newlet)
-        }
-      })
+      // document.addEventListener("mousedown", (e)=>{
+      //
+      //     let newlet = document.createElement("button")
+      //     newlet.style.position = 'absolute'
+      //     newlet.style.padding= "15px 32px"
+      //     newlet.style.color = '8a0303'
+      //     newlet.style.left =e.clientX + 'px'
+      //     newlet.style.top = e.clientY + 'px'
+      //     document.body.appendChild(newlet)
+      // })
 
       var x = document.getElementById("myAudio");
       function playAudio() {
@@ -145,27 +141,28 @@
       // If the count down is finished, write some text
       if (distance < 0) {
         clearInterval(y);
-          document.getElementById("watch").innerHTML = "Freedom to Breath";
+          document.getElementById("watch").innerHTML = "Freedom to Breathe";
         }
       }, 1000)
-
-      let t = setInterval( () =>
-      { let op = true
-        for (let j = 0; j < 18; j++){
-          let p = parseFloat(document.getElementById(j).style.opacity)
-        if (p < .95 && j != 5 && j != 11){
-          op = false
-        }
-      }if(op === true) {
-        console.log(op)
-        clearInterval(y);
-        clearInterval(t);
-        document.getElementById("BLM").textContent=
-        "How long will it take for Black lives to matter?"
-        blood= true;
-
-
-        }}, 1000)
+      // Previous version that relied on the the timer as noting the completion time
+      // let t = setInterval( () =>
+      // { let op = true
+      //   for (let j = 0; j < 18; j++){
+      //     let p = parseFloat(document.getElementById(j).style.opacity)
+      //     if (p === 5 || p === 11){
+      //       continue
+      //     }
+      //     if (p < .90){
+      //       op = false
+      //       break
+      //     }
+      // }if(op === true) {
+      //   blood = true;
+      //   clearInterval(y);
+      //   clearInterval(t);
+      //   document.getElementById("BLM").textContent=
+      //   "How long will it take for Black lives to matter?"
+      //   }}, 100)
 
     </script>
   </body>
