@@ -2,13 +2,17 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Web App</title>
+    <title>BLM</title>
+    <link rel="icon" href="heart.png">
+     <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@500&display=swap" rel="stylesheet">
+     <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
     <style>
 
       body {
         margin: 0;
         padding: 0;
         background: black;
+        cursor: url(heart.png), auto;
       }
 
 
@@ -22,11 +26,35 @@
 
       h1 {
         font-size: 100px;
-        font-family: sans-serif;
+        font-family: 'Montserrat Alternates', sans-serif;
         text-align: center;
         display: inline;
-        color: white;
+        color: pink;
+        text-transform: uppercase;
+      }
 
+
+      button{
+        color:black;
+        border-radius: 12px;
+        background-color: #d3d3d3
+        border: 5px double white;
+
+      }
+
+      #watch{
+        color:#e1ad01;
+        font-size:300%;
+        font-family: 'Orbitron', sans-serif;
+      }
+      canvas{
+        postion: relative
+      }
+
+      #buttons{
+        color:#8a0303;
+        background-color: #8a0303;
+        padding: 15px 32px;
       }
 
 
@@ -34,22 +62,47 @@
     </style>
   </head>
   <body>
+    <audio id="myAudio"><source src="JesseSpillane.mp3" type="audio/mpeg"></audio>
+      <button onclick="playAudio()" type="button">Play</button>
+      <button onclick="pauseAudio()" type="button">Pause</button>
       <div>
             <h1 id="BLM"></h1>
       </div>
-
+      <div>
+        <h2 id="watch"></h2>
+      </div>
 
     <script>
 
+      const blood = false;
 
       iter()
+      document.addEventListener("mousemove", (e)=>{
+        if (blood === true ) {
+          let newlet = document.createElement("button")
+          newlet.style.position = 'absolute'
+          newlet.style.border_radius= "50%"
+          newlet.style.padding= "15px 32px"
+          newlet.style.left =e.clientX + 'px'
+          newlet.style.top = e.clientY + 'px'
+          document.body.appendChild(newlet)
+        }
+      })
+
+      var x = document.getElementById("myAudio");
+      function playAudio() {
+        x.play();
+      }
+      function pauseAudio() {
+        x.pause();
+      }
 
       setTimeout(
         document.getElementById("BLM")
         .addEventListener("mouseover", light), 200)
 
       function iter (){
-        const blm = ["B","L","A","C","K","L","I","V","E","S","\n","M","A","T","T","E","R"]
+        const blm = ["B","L","A","C","K"," ","L","I","V","E","S","\n","M","A","T","T","E","R"]
         for(let i = 0; i < blm.length; i++){
           printBLM(blm[i],i)
         }
@@ -70,67 +123,50 @@
         let tar = document.getElementById(e.target.id)
         if (!(isNaN(parseInt(tar.id)))){
           let opac = parseFloat(tar.style.opacity) + 0.05
-          console.log(tar.style.opacity)
+          // console.log(tar.style.opacity)
           tar.style.opacity= opac
         }
       }
 
 
-      function getDog () {
-        const dog = document.querySelector('#dog')
-        const url = 'https://dog.ceo/api/breeds/image/random'
-        const req = { method: 'GET' }
-        fetch(url, req)
-          .then(res => res.json())
-          .then(data => {
-            dog.setAttribute('src', data.message)
-          })
-      }
+      let counter = new Date().getTime() +526002;
 
-      function getGeo () {
-        const url = 'https://location.services.mozilla.com/v1/geolocate?key=test'
-        const req = { method: 'GET' }
-        fetch(url, req)
-          .then(res => res.json())
-          .then(data => getNWSpoint(data))
-      }
+      // Update the count down every 1 second
+      let y = setInterval(function() {
+      // Get today's date and time
+      let now = new Date().getTime();
+      // Find the distance between now and the count down date
+      let distance = counter - now;
+      // Time calculations for days, hours, minutes and seconds
+      let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      // Display the result in the element with id="demo"
+      document.getElementById("watch").innerHTML = minutes + "m " + seconds + "s ";
+      // If the count down is finished, write some text
+      if (distance < 0) {
+        clearInterval(y);
+          document.getElementById("watch").innerHTML = "Freedom to Breath";
+        }
+      }, 1000)
 
-      function getNWSpoint (data) {
-        const lat = data.location.lat
-        const lon = data.location.lng
-        const url = `https://api.weather.gov/points/${lat},${lon}`
-        const req = { method: 'GET' }
-        fetch(url, req)
-          .then(res => res.json())
-          .then(data => getNWSforecast(data))
-      }
+      let t = setInterval( () =>
+      { let op = true
+        for (let j = 0; j < 18; j++){
+          let p = parseFloat(document.getElementById(j).style.opacity)
+        if (p < .95 && j != 5 && j != 11){
+          op = false
+        }
+      }if(op === true) {
+        console.log(op)
+        clearInterval(y);
+        clearInterval(t);
+        document.getElementById("BLM").textContent=
+        "How long will it take for Black lives to matter?"
+        blood= true;
 
-      function getNWSforecast (data) {
-        const office = data.properties.cwa
-        const x = data.properties.gridX
-        const y = data.properties.gridY
-        const url = `https://api.weather.gov/gridpoints/${office}/${x},${y}/forecast`
-        const req = { method: 'GET' }
-        fetch(url, req)
-          .then(res => res.json())
-          .then(data => {
-            const f = data.properties.periods[0].detailedForecast
-            const t = document.querySelector('#title')
-            t.textContent = f
-          })
-      }
 
-      function getIP () {
-        const url = `https://www.cloudflare.com/cdn-cgi/trace`
-        const req = { method: 'GET' }
-        fetch(url, req)
-          .then(res => res.json())
-          .then(data => {
-            console.log(data)
-            // document.querySelector('#ip')
-            // t.textContent = data
-          })
-      }
+        }}, 1000)
+
     </script>
   </body>
 </html>
